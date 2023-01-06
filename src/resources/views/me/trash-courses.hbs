@@ -7,7 +7,12 @@
     <thead>
       <tr>
         <th scope="col">#</th>
-        <th scope="col">Tên khóa học</th>
+        <th scope="col">
+          Tên khóa học
+        <a href="">
+          <span class="oi oi-elevator"></span>
+        </a>  
+        </th>
         <th scope="col">Description</th>
         <th scope="col" colspan="2">Thời gian xóa</th>
       </tr>
@@ -15,11 +20,11 @@
     <tbody>
       {{#each courses}}
         <tr>
-          <th scope="row"> {{math @index "+" 1}}</th>
+          <th scope="row"> {{this._id}}</th>
           <td>{{this.name}}</td>
           <td>{{this.description}}</td>
           <td>{{this.createdAt}}</td>
-          <td colspan="3"></td>
+          <td colspan="4"></td>
           <td>
             <a class="btn btn-link btn-restore" data-id="{{this._id}}" href="">Khôi phục</a>
           </td>

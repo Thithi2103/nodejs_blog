@@ -7,10 +7,14 @@ const path = require('path');
 const route = require('./routes');
 const db = require('./config/db');
 const methodOverride = require('method-override');
+const SortMiddleware = require('./app/middleware/SortMiddleware');
 
 
 // Method Overrides
 app.use(methodOverride('_method'))
+
+// Custom middlewares
+app.use(SortMiddleware);
 
 
 // Connect to DB
@@ -49,7 +53,32 @@ app.engine(
             '/': lvalue / rvalue,
             '%': lvalue % rvalue
     }[operator];
-  }
+  },
+
+    sortable: (field, sort) => {
+
+      const sortType = field === sort.column ? sort.type : 'default';
+
+      const icons = {
+        default: 'oi oi-elevator',
+        asc: 'oi oi-sort-ascending',
+        desc: 'oi oi-sort-descending',
+      }
+
+      const types = {
+        default: 'asc',
+        asc: 'desc',
+        desc: 'asc',
+      }
+      const icon = icons[sortType];
+      const type = types[sortType];
+
+      return ` 
+        <a href="?_sort&column=${field}&type=${type}">
+        <span class="${icon}"></span>
+        </a>
+     `;
+    }
 }
 }));
 
